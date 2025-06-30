@@ -10,43 +10,60 @@
 
   <div id="header"></div>
 
-  <!-- 포스터 이미지 -->
-  <section class="py-16 px-6 max-w-5xl mx-auto">
-    <img src="image/poster_2025_summer.png" alt="AI 공방 포스터"
-         class="rounded-3xl w-full shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 object-cover">
+  <!-- 슬라이더 영역 -->
+  <section class="py-16 px-6 max-w-6xl mx-auto relative overflow-hidden">
+    <div id="slider" class="flex transition-transform duration-500">
+      <!-- Slide 1: 포스터 -->
+      <div class="min-w-full flex justify-center">
+        <img src="image/banner_2025_summer.png" alt="AI 공방 포스터"
+             class="rounded-3xl w-full max-w-2xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 object-cover">
+      </div>
+      <!-- Slide 2: 프로젝트 설명 -->
+      <div class="min-w-full flex flex-col justify-center space-y-6 px-4 md:px-12">
+        <h2 class="text-4xl font-bold mb-4 text-blue-700">AI 공방 프로젝트</h2>
+        <p class="text-neutral-700 leading-relaxed">
+          아주대학교 아주 HUB에서 진행한 AI 공방 프로젝트는
+          <span class="font-semibold text-purple-700">프로그래밍(파이썬, 자바스크립트)</span>,
+          <span class="font-semibold text-green-700">클라우드(AWS)</span>,
+          <span class="font-semibold text-blue-700">인공지능(ChatGPT, Stable Diffusion)</span> 기술을 접목해
+          나만의 웹 서비스를 만드는 창의적인 프로그램입니다.
+        </p>
+        <ul class="list-disc pl-6 space-y-3 text-neutral-700">
+          <li><b class="text-purple-700">AI 콘텐츠 생성</b> - ChatGPT, DALL·E, Suno 활용</li>
+          <li><b class="text-purple-700">프롬프트 엔지니어링</b> 실습</li>
+          <li><b class="text-purple-700">HTML/CSS/JS</b> 인터랙티브 웹</li>
+          <li><b class="text-purple-700">AWS 서버리스</b> Lambda, S3, DynamoDB</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 좌우 버튼 -->
+    <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-neutral-200 p-2 rounded-full hover:bg-neutral-300">&#8592;</button>
+    <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-neutral-200 p-2 rounded-full hover:bg-neutral-300">&#8594;</button>
   </section>
 
-  <!-- 본문 내용 -->
-  <section class="py-20 px-6 max-w-4xl mx-auto space-y-12">
-    <div class="bg-neutral-50 p-8 rounded-3xl shadow hover:shadow-lg transition">
-      <h3 class="text-3xl font-bold mb-6 text-blue-700">교육 내용</h3>
-      <ul class="list-disc pl-6 space-y-3 text-neutral-700">
-        <li><b class="text-purple-700">AI 콘텐츠 생성 기술 이해</b> - ChatGPT, DALL·E, Suno 등 활용 사례, 텍스트·이미지·음악 생성 기초</li>
-        <li><b class="text-purple-700">프롬프트 엔지니어링</b> - 텍스트 기반 콘텐츠 자동 생성 실습</li>
-        <li><b class="text-purple-700">인터랙티브 웹서비스 기초</b> - HTML/CSS/JavaScript 구조 및 UI 설계</li>
-        <li><b class="text-purple-700">AI API 연동</b> - OpenAI API 활용 사용자 입력 기반 콘텐츠 생성 웹 앱 만들기</li>
-        <li><b class="text-purple-700">AWS 기반 서버리스</b> - Lambda, API Gateway, S3, DynamoDB로 백엔드 구성 실습</li>
-      </ul>
-    </div>
-
-    <div class="bg-neutral-50 p-8 rounded-3xl shadow hover:shadow-lg transition">
-      <h3 class="text-3xl font-bold mb-6 text-green-700">팀 프로젝트</h3>
-      <p class="text-neutral-700 mb-4">주제 선정 → AI 콘텐츠 기획 → 웹 및 백엔드 설계 → 중간 발표 → 최종 발표 및 시연</p>
-      <p class="text-neutral-700 mb-4 font-semibold">주제 예시:</p>
-      <ul class="list-disc pl-6 space-y-2 text-neutral-700">
-        <li>AI 감성 일기 생성기</li>
-        <li>AI 커버 아트 생성 플랫폼</li>
-      </ul>
-    </div>
-
-    <div class="bg-neutral-50 p-8 rounded-3xl shadow hover:shadow-lg transition">
-      <h3 class="text-3xl font-bold mb-6 text-blue-600">운영 방식</h3>
-      <ul class="list-disc pl-6 space-y-3 text-neutral-700">
-        <li>기간: <span class="font-semibold text-blue-800">2025년 7월 1일 ~ 8월 28일</span>, 매주 화·목 12:00~13:00</li>
-        <li>온/오프라인 병행 (Zoom 및 대면 강의)</li>
-        <li>매회 실습 자료 제공 및 주간 과제 부여</li>
-        <li>팀: 3~5인 구성</li>
-      </ul>
+  <!-- 결과물 카드 -->
+  <section class="py-20 px-6 max-w-6xl mx-auto">
+    <h3 class="text-3xl font-bold mb-12 text-center">프로젝트 결과물</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="bg-neutral-50 p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <img src="image/sample_project1.png" alt="AI 일기 생성기" 
+            class="rounded-xl w-full h-48 object-contain mb-4">
+        <h4 class="text-xl font-semibold mb-2">AI 감성 일기 생성기</h4>
+        <p class="text-neutral-700 text-sm">감정 키워드를 입력하면 AI가 글과 이미지를 만들어주는 서비스</p>
+      </div>
+      <div class="bg-neutral-50 p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <img src="image/sample_project2.png" alt="AI 커버 아트" 
+            class="rounded-xl w-full h-48 object-contain mb-4">
+        <h4 class="text-xl font-semibold mb-2">AI 커버 아트 생성</h4>
+        <p class="text-neutral-700 text-sm">음악이나 시를 입력하면 AI가 감각적인 커버 이미지를 생성</p>
+      </div>
+      <div class="bg-neutral-50 p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <img src="image/sample_project3.png" alt="AI 스토리텔러" 
+            class="rounded-xl w-full h-48 object-contain mb-4">
+        <h4 class="text-xl font-semibold mb-2">AI 스토리텔러</h4>
+        <p class="text-neutral-700 text-sm">짧은 키워드로 동화같은 이야기를 만들어주는 AI 웹서비스</p>
+      </div>
     </div>
   </section>
 
@@ -59,6 +76,24 @@
     fetch('footer.html').then(res => res.text()).then(data => {
       document.getElementById('footer').innerHTML = data;
     });
+
+    let currentSlide = 0;
+    const slider = document.getElementById('slider');
+    const totalSlides = slider.children.length;
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    }
   </script>
 
 </body>
