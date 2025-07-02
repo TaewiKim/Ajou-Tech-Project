@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DynamoDB 요청</title>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const url =
+                    "https://fgrgq04u64.execute-api.ap-northeast-2.amazonaws.com/default/Lambda-Taewi-Test";
+
+                document
+                    .getElementById("sendRequest")
+                    .addEventListener("click", function () {
+                        const currentTime = new Date().toISOString();
+                        const data = {
+                            Item: {
+                                UserID: { S: "user_1234" },
+                                message: { S: "Hello, DynamoDB!" },
+                                Timestamp: { S: currentTime },
+                            },
+                        };
+
+                        console.log("📌 요청 시작:", new Date().toISOString());
+                        console.log("📤 보낼 데이터:", JSON.stringify(data));
+
+                        fetch(url, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data),
+                        })
+                            .then((response) => {
+                                console.log(
+                                    "✅ 응답 상태 코드:",
+                                    response.status
+                                );
+                                return response.text();
+                            })
+                            .then((responseText) => {
+                                console.log("📥 받은 응답:", responseText);
+                                document.getElementById(
+                                    "response"
+                                ).textContent = responseText;
+                            })
+                            .catch((error) => {
+                                console.error("❌ 요청 중 오류 발생:", error);
+                            });
+                    });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>DynamoDB 데이터 업로드</h1>
+        <button id="sendRequest">요청 보내기</button>
+        <p id="response"></p>
+    </body>
+</html>

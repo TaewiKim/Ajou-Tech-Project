@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>카카오톡 AI 챗봇 프로젝트</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-neutral-900 font-sans">
+
+  <div id="header"></div>
+
+  <!-- 슬라이더 영역 -->
+  <section class="py-16 px-6 max-w-6xl mx-auto relative overflow-hidden">
+    <div id="slider" class="flex transition-transform duration-500">
+      <!-- Slide 1: 프로젝트 설명 -->
+      <div class="min-w-full flex flex-col justify-center space-y-6 px-4 md:px-12">
+        <h2 class="text-4xl font-bold mb-4 text-green-700">카카오톡 AI 챗봇 프로젝트</h2>
+        <p class="text-neutral-700 leading-relaxed">
+          이 프로젝트는 
+          <span class="font-semibold text-yellow-700">카카오톡 채널 API</span>와
+          <span class="font-semibold text-blue-700">AWS 서버리스</span>,
+          <span class="font-semibold text-purple-700">AI 챗봇(ChatGPT)</span>을 결합해
+          나만의 챗봇을 직접 만들고 배포해보는 창의적인 실습형 프로그램입니다.
+        </p>
+        <ul class="list-disc pl-6 space-y-3 text-neutral-700">
+          <li><b class="text-green-700">카카오톡 챗봇 플로우</b> 설계 및 자동 응답</li>
+          <li><b class="text-purple-700">ChatGPT 연동</b>을 통한 대화형 서비스 구축</li>
+          <li><b class="text-blue-700">AWS Lambda + API Gateway</b> 서버리스 구조</li>
+          <li><b class="text-yellow-700">S3 · DynamoDB</b>를 활용한 데이터 저장</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 좌우 버튼 -->
+    <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-neutral-200 p-2 rounded-full hover:bg-neutral-300">&#8592;</button>
+    <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-neutral-200 p-2 rounded-full hover:bg-neutral-300">&#8594;</button>
+  </section>
+
+<!-- 결과물 카드 -->
+<section class="py-20 px-6 max-w-6xl mx-auto">
+  <h3 class="text-3xl font-bold mb-12 text-center">우리의 챗봇 결과물</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    <!-- 카드 1 -->
+    <div class="bg-neutral-50 p-6 rounded-2xl shadow hover:shadow-xl transition">
+      <img src="image/kkobot.png" alt="성경암송 챗봇 꼬봇" 
+          class="rounded-xl w-full h-48 object-contain mb-4">
+      <h4 class="text-xl font-semibold mb-2">성경암송 챗봇 "꼬봇"</h4>
+      <p class="text-neutral-700 text-sm">
+        카카오톡에서 말씀을 입력하면 암송 퀴즈를 내주고,
+        일상적인 대화도 해주는 스마트한 챗봇
+      </p>
+    </div>
+
+    <!-- 카드 2 -->
+    <div class="bg-neutral-50 p-6 rounded-2xl shadow hover:shadow-xl transition">
+      <img src="image/biblememory.jpg" alt="성경암송 챗봇 채널" 
+          class="rounded-xl w-full h-48 object-contain mb-4">
+      <h4 class="text-xl font-semibold mb-2">네비게이토 성경암송 채널</h4>
+      <p class="text-neutral-700 text-sm">
+        카카오톡에서 말씀을 입력하면 암송 퀴즈를 내주고 채점해주는 채널
+      </p>
+    </div>
+  </div>
+</section>
+
+
+  <div id="footer"></div>
+
+  <script>
+    fetch('header.html').then(res => res.text()).then(data => {
+      document.getElementById('header').innerHTML = data;
+    });
+    fetch('footer.html').then(res => res.text()).then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+
+    let currentSlide = 0;
+    const slider = document.getElementById('slider');
+    const totalSlides = slider.children.length;
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    }
+  </script>
+
+</body>
+</html>
