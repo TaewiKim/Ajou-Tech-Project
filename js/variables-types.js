@@ -1,6 +1,6 @@
 // 변수 선언
-let name = "Taewi";
+let myname = "Taewi";
 const age = 28;
 var isStudent = true;
 
-console.log(name, age, isStudent);
+console.log(myname, age, isStudent);
