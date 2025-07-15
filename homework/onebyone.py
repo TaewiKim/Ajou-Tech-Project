@@ -1,17 +1,10 @@
 from openai import OpenAI
-import ast
+import json
 
+system_prompt = "답변 형식은 Json으로 Think와 Answer로 구성되어 있습니다. Think는 답변을 도출하는 과정이고, Answer는 최종 답변입니다. 예시: {\"Think\": \"답변을 도출하는 과정\", \"Answer\": \"최종 답변\"}"
 
-
-
-system_prompt = "여기에 당신의 프롬프트를 작성해 주세요"
-
-
-
-
-
-questions = """
-{
+# 질문 dict
+questions_dict = {
     "다음 중 체내에서 완전히 산화될 때 가장 많은 에너지를 방출하는 것은?": {
         "options": {
             "A": "1그램의 포도당",
@@ -93,31 +86,42 @@ questions = """
         }
     }
 }
-"""
+
+# 정답 리스트
 answers = ["B", "B", "D", "B", "D", "C", "B", "D", "D", "D"]
 
+# OpenAI 초기화
 apikey = "여기에 OpenAI API 키를 입력하세요"
-
 client = OpenAI(api_key=apikey)
 
-response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {"role": "system", "content": '답변 형식은 List로 ["A", "B", "C", "D"] 형식으로 작성해 주세요' + system_prompt},
-        {"role": "user", "content": questions}
-    ]
-)
+# GPT 답변 저장
+gpt_answers_list = []
 
-# 응답 출력
-gpt_answers = response.choices[0].message.content
-print(gpt_answers)
+# 하나씩 질문해서 답변 받기
+for idx, (question, content) in enumerate(questions_dict.items()):
+    options_text = "\n".join([f"{key}: {val}" for key, val in content["options"].items()])
+    question_text = f"{question}\n{options_text}"
 
-# 안전하게 리스트로 변환
-gpt_answers_list = ast.literal_eval(gpt_answers)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": question_text}
+        ]
+    )
+
+    # 출력 형식이 ['B'] 같은 형태라 ast로 안전하게 리스트 변환
+    answer = json.loads(response.choices[0].message.content.strip())
+    think = answer.get("Think", "")
+    answer = answer.get("Answer", [])
+    gpt_answers_list.append(answer[0])
+
+    print(f"Q{idx+1}: {question}")
+    print(f"think: {think}")
+    print(f"GPT Answer: {answer[0]}")
+    print()
 
 # 정답률 계산
 correct_count = sum(1 for i in range(len(answers)) if gpt_answers_list[i] == answers[i])
-total_questions = len(answers)
-accuracy = correct_count / total_questions * 100
-
-print("정답률:", accuracy, "%")
+accuracy = correct_count / len(answers) * 100
+print(f"정답률: {accuracy:.2f}%")
