@@ -1,0 +1,13 @@
+'''
+Build an interactive ASCII art drawing tool with sound feedback. The application should:
+ 
+1. Create a canvas where users can draw by clicking and dragging
+2. Place different ASCII characters or symbols when the user draws
+3. Play corresponding musical notes when each character is placed
+4. Include multiple pattern sets with different characters and corresponding note scales
+5. Add a pattern switcher button to cycle through different character/sound themes
+6. Include a clear button to reset the canvas
+7. Support both mouse and touch input for mobile compatibility
+ 
+The application should be creative and fun to use, creating an audio-visual experience where patterns of characters create both visual art and musical patterns. Ensure the musical notes are harmonious when played in sequence.
+'''
