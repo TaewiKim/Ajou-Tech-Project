@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ajou-user-chathistory v2 – POST-only Chat CRUD</title>
+  <script>
+    // API Gateway 주소를 한 번만 정의
+    const API_BASE_URL = "your-api-gateway-url"; // 여기에 실제 API Gateway URL을 입력하세요
+    window.API_BASE_URL = API_BASE_URL; // JS 전역에서도 접근 가능
+  </script>
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%237bb5ff"/><text x="50%" y="54%" font-size="34" text-anchor="middle" fill="%230b1020" font-family="Arial, Helvetica, sans-serif">A</text></svg>'>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 왼쪽: 설정 패널 -->
+    <aside>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>POST-only Chat CRUD</h1>
+          <div class="sub">ajou-user-chathistory · v2</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="baseUrl">API Base URL</label>
+        <input id="baseUrl" class="input" value="" readonly />
+      </div>
+
+      <div class="field">
+        <label for="userId">userId (PK)</label>
+        <input id="userId" class="input" placeholder="예: demo-user-01" />
+      </div>
+
+      <div class="row">
+        <div class="field" style="flex:1">
+          <label for="order">정렬</label>
+          <select id="order">
+            <option value="asc">오래된순 (과거→현재)</option>
+            <option value="desc" selected>최신순 (현재→과거)</option>
+          </select>
+        </div>
+        <div class="field" style="flex:1">
+          <label>&nbsp;</label>
+          <button id="btnLoad" class="btn primary" title="목록 불러오기">
+            <span id="loadSpin" style="display:none" class="spinner"></span>
+            <span id="loadTxt">대화 불러오기</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="btnSave" class="btn">설정 저장</button>
+        <button id="btnClearLocal" class="btn ghost" title="화면에서만 지움">화면 비우기</button>
+      </div>
+
+      <div class="hint">• 모든 Create/Update/Delete는 <b>POST</b>로 처리합니다.<br/>• 목록도 <b>POST</b>로 요청합니다.<br/>• CORS 허용이 필요할 수 있어요.</div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label>빠른 팁</label>
+        <div class="hint">Enter=전송, Shift+Enter=줄바꿈. 인라인 “수정/저장/취소”, 삭제 전 확인 모달 표시.</div>
+      </div>
+    </aside>
+
+    <!-- 오른쪽: 대화 영역 -->
+    <main>
+      <header>
+        <div class="toolbar">
+          <div class="left">
+            <span class="tag" id="tagUser">userId: -</span>
+            <span class="tag" id="tagCount">0개</span>
+          </div>
+          <div class="right">
+            <button id="btnRefresh" class="btn">새로고침</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="listwrap">
+        <ul id="msgList" class="msglist">
+          <li class="empty">대화가 없습니다. 좌측에서 설정 입력 후 “대화 불러오기”를 눌러주세요.</li>
+        </ul>
+      </div>
+
+      <div class="composer">
+        <div class="sendwrap">
+          <textarea id="message" placeholder="메시지를 입력하세요 (Enter=전송, Shift+Enter=줄바꿈)"></textarea>
+          <button id="btnSend" class="btn primary">보내기</button>
+        </div>
+        <div class="status" id="status">준비됨</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 토스트 -->
+  <div id="toastwrap" class="toastwrap" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- 확인 모달 -->
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal">
+      <h3 id="modalTitle">확인</h3>
+      <div id="modalBody" class="msgtext"></div>
+      <div class="foot">
+        <button id="modalCancel" class="btn">취소</button>
+        <button id="modalOk" class="btn danger">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 페이지 로드 시 input에 자동 표시
+    document.getElementById("baseUrl").value = API_BASE_URL;
+  </script>
+  <script src="./app.js" defer></script>
+</body>
+</html>
