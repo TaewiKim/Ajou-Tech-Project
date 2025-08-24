@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="cognito"
+    data-domain="shoppers.auth.ap-southeast-1.amazoncognito.com"
+    data-client-id="77bs6erbh4aanee0r4oofooalj"
+    data-user-pool-id="ap-southeast-1_cizS35ZY6"
+    data-redirect-path="/default/auth/callback"
+    data-logout-path="/default/shoppingApp"
+  />
+  <title>ChatGPT Clone</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" type="image/svg+xml"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%230b0c0f'/%3E%3Cpath fill='%23ffffff' d='M14.949 6.547a3.94 3.94 0 0 0-.348-3.273 4.11 4.11 0 0 0-4.4-1.934A4.1 4.1 0 0 0 8.423.2 4.15 4.15 0 0 0 6.305.086a4.1 4.1 0 0 0-1.891.948 4.04 4.04 0 0 0-1.158 1.753 4.1 4.1 0 0 0-1.563.679A4 4 0 0 0 .554 4.72a3.99 3.99 0 0 0 .502 4.731 3.94 3.94 0 0 0 .346 3.274 4.11 4.11 0 0 0 4.402 1.933c.382.425.852.764 1.377.995.526.231 1.095.35 1.67.346 1.78.002 3.358-1.132 3.901-2.804a4.1 4.1 0 0 0 1.563-.68 4 4 0 0 0 1.14-1.253 3.99 3.99 0 0 0-.506-4.716m-6.097 8.406a3.05 3.05 0 0 1-1.945-.694l.096-.054 3.23-1.838a.53.53 0 0 0 .265-.455v-4.49l1.366.778q.02.011.025.035v3.722c-.003 1.653-1.361 2.992-3.037 2.996m-6.53-2.75a2.95 2.95 0 0 1-.36-2.01l.095.057L5.29 12.09a.53.53 0 0 0 .527 0l3.949-2.246v1.555a.05.05 0 0 1-.022.041L6.473 13.3c-1.454.826-3.311.335-4.15-1.098m-.85-6.94A3.02 3.02 0 0 1 3.07 3.949v3.785a.51.51 0 0 0 .262.451l3.93 2.237-1.366.779a.05.05 0 0 1-.048 0L2.585 9.342a2.98 2.98 0 0 1-1.113-4.094zm11.216 2.571L8.747 5.576l1.362-.776a.05.05 0 0 1 .048 0l3.265 1.86a3 3 0 0 1 1.173 1.207 2.96 2.96 0 0 1-.27 3.2 3.05 3.05 0 0 1-1.36.997V8.279a.52.52 0 0 0-.276-.445m1.36-2.015-.097-.057-3.226-1.855a.53.53 0 0 0-.53 0L6.249 6.153V4.598a.04.04 0 0 1 .019-.04L9.533 2.7a3.07 3.07 0 0 1 3.257.139c.474.325.843.778 1.066 1.303.223.526.289 1.103.191 1.664zM5.503 8.575 4.139 7.8a.05.05 0 0 1-.026-.037V4.049c0-.57.166-1.127.476-1.607s.752-.864 1.275-1.105a3.08 3.08 0 0 1 3.234.41l-.096.054-3.23 1.838a.53.53 0 0 0-.265.455zm.742-1.577 1.758-1 1.762 1v2l-1.755 1-1.762-1z'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <button class="new-chat-btn" id="newChatBtn" title="새 대화 시작">＋ 새 대화</button>
+      </div>
+      <div class="sidebar-body">
+        <div class="conv-list" id="convList"></div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-card" id="userCard">
+          <div class="user-initial" id="userInitial">?</div>
+          <div class="user-meta">
+            <div class="user-name" id="userName">로그인 필요</div>
+            <div class="user-email" id="userEmail"></div>
+          </div>
+        </div>
+        <div class="auth-actions">
+          <button class="auth-btn" id="loginBtn">로그인</button>
+          <button class="auth-btn outline" id="logoutBtn" style="display:none;">로그아웃</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="brand">
+          <button class="ghost" id="sidebarToggle" title="대화 목록 열기">☰</button>
+
+          <!-- OpenAI 아이콘 (인라인 SVG, 흰색) -->
+          <svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill="#ffffff" d="M14.949 6.547a3.94 3.94 0 0 0-.348-3.273 4.11 4.11 0 0 0-4.4-1.934A4.1 4.1 0 0 0 8.423.2 4.15 4.15 0 0 0 6.305.086a4.1 4.1 0 0 0-1.891.948 4.04 4.04 0 0 0-1.158 1.753 4.1 4.1 0 0 0-1.563.679A4 4 0 0 0 .554 4.72a3.99 3.99 0 0 0 .502 4.731 3.94 3.94 0 0 0 .346 3.274 4.11 4.11 0 0 0 4.402 1.933c.382.425.852.764 1.377.995.526.231 1.095.35 1.67.346 1.78.002 3.358-1.132 3.901-2.804a4.1 4.1 0 0 0 1.563-.68 4 4 0 0 0 1.14-1.253 3.99 3.99 0 0 0-.506-4.716m-6.097 8.406a3.05 3.05 0 0 1-1.945-.694l.096-.054 3.23-1.838a.53.53 0 0 0 .265-.455v-4.49l1.366.778q.02.011.025.035v3.722c-.003 1.653-1.361 2.992-3.037 2.996m-6.53-2.75a2.95 2.95 0 0 1-.36-2.01l.095.057L5.29 12.09a.53.53 0 0 0 .527 0l3.949-2.246v1.555a.05.05 0 0 1-.022.041L6.473 13.3c-1.454.826-3.311.335-4.15-1.098m-.85-6.94A3.02 3.02 0 0 1 3.07 3.949v3.785a.51.51 0 0 0 .262.451l3.93 2.237-1.366.779a.05.05 0 0 1-.048 0L2.585 9.342a2.98 2.98 0 0 1-1.113-4.094zm11.216 2.571L8.747 5.576l1.362-.776a.05.05 0 0 1 .048 0l3.265 1.86a3 3 0 0 1 1.173 1.207 2.96 2.96 0 0 1-.27 3.2 3.05 3.05 0 0 1-1.36.997V8.279a.52.52 0 0 0-.276-.445m1.36-2.015-.097-.057-3.226-1.855a.53.53 0 0 0-.53 0L6.249 6.153V4.598a.04.04 0 0 1 .019-.04L9.533 2.7a3.07 3.07 0 0 1 3.257.139c.474.325.843.778 1.066 1.303.223.526.289 1.103.191 1.664zM5.503 8.575 4.139 7.8a.05.05 0 0 1-.026-.037V4.049c0-.57.166-1.127.476-1.607s.752-.864 1.275-1.105a3.08 3.08 0 0 1 3.234.41l-.096.054-3.23 1.838a.53.53 0 0 0-.265.455zm.742-1.577 1.758-1 1.762 1v2l-1.755 1-1.762-1z"/>
+          </svg>
+
+          <span>ChatGPT Clone</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost" id="clearAllBtn" title="모든 대화 삭제">모두 삭제</button>
+        </div>
+      </header>
+
+      <section class="chat" id="chat">
+        <div class="messages" id="messages"></div>
+      </section>
+
+      <footer class="composer">
+        <form id="composerForm">
+          <div class="composer-row">
+            <textarea id="promptInput" placeholder="메시지를 입력하세요... (Shift+Enter 줄바꿈)" rows="1"></textarea>
+            <div class="composer-actions">
+              <button type="button" id="stopBtn" class="ghost" disabled>중지</button>
+              <button type="submit" id="sendBtn" class="primary">전송</button>
+            </div>
+          </div>
+          <div class="hint">
+            로그인 후 사용하세요. <strong>대화 이력은 서버(DynamoDB)</strong>에 저장됩니다.
+          </div>
+        </form>
+      </footer>
+    </main>
+  </div>
+
+  <template id="msgTemplate">
+    <div class="msg">
+      <div class="avatar">A</div>
+      <div class="bubble"></div>
+    </div>
+  </template>
+
+  <template id="productTemplate">
+    <div class="product-card">
+      <a target="_blank">
+        <img />
+        <div class="p-title"></div>
+        <div class="p-price"></div>
+        <div class="p-mall"></div>
+      </a>
+    </div>
+  </template>
+
+  <script src="./auth.js"></script>
+  <script src="./api.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
